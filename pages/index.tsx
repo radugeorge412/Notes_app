@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Note from "@/components/Note";
 
 export default function Home() {
-  const [notes, setNotes] = useState<Note[]>([
+  const [notes, setNotes] = useState<NoteType[]>([
     {
       id: 1,
       title: "test note 1",
@@ -37,7 +37,7 @@ export default function Home() {
       content: "bla bla note6",
     },
   ]);
-  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+  const [selectedNote, setSelectedNote] = useState<NoteType | null>(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -45,7 +45,7 @@ export default function Home() {
     const getNotes = async () => {
       try {
         const res = await fetch("http://localhost:3000/api/notes");
-        const notes: Note[] = await res.json();
+        const notes: NoteType[] = await res.json();
         setNotes(notes);
       } catch (error) {
         console.log(error);
@@ -78,7 +78,7 @@ export default function Home() {
     }
   };
 
-  const handleSelectNote = async (note: Note) => {
+  const handleSelectNote = async (note: NoteType) => {
     setTitle(note.title);
     setContent(note.content);
     setSelectedNote(note);
@@ -170,7 +170,7 @@ export default function Home() {
   );
 }
 
-export type Note = {
+export type NoteType = {
   id: number;
   title: string;
   content: string;

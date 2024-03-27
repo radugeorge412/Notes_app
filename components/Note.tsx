@@ -1,5 +1,5 @@
 import React from "react";
-import { Note } from "../pages/index";
+import { NoteType } from "../pages/index";
 
 const Note = ({ handleSelectNote, handleDeleteNote, note }: Props) => {
   return (
@@ -20,8 +20,8 @@ const Note = ({ handleSelectNote, handleDeleteNote, note }: Props) => {
 };
 
 type Props = {
-  handleSelectNote: (note: Note) => void;
+  handleSelectNote: (note: NoteType) => void;
   handleDeleteNote: (e: React.MouseEvent, id: number) => void;
-  note: Note;
+  note: NoteType;
 };
 export default Note;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Note } from "../pages/index";
+import { NoteType } from "../pages/index";
 
 const Form = ({
   selectedNote,
@@ -46,7 +46,7 @@ const Form = ({
 };
 
 type Props = {
-  selectedNote: Note | null;
+  selectedNote: NoteType | null;
   handleUpdateNote: (e: React.FormEvent<HTMLFormElement>) => void;
   setContent: (content: string) => void;
   setTitle: (title: string) => void;
