@@ -5,46 +5,18 @@ import React, { useState, useEffect } from "react";
 import Note from "@/components/Note";
 
 export default function Home() {
-  const [notes, setNotes] = useState<NoteType[]>([
-    {
-      id: 1,
-      title: "test note 1",
-      content: "bla bla note1",
-    },
-    {
-      id: 2,
-      title: "test note 2 ",
-      content: "bla bla note2",
-    },
-    {
-      id: 3,
-      title: "test note 3",
-      content: "bla bla note3",
-    },
-    {
-      id: 4,
-      title: "test note 4 ",
-      content: "bla bla note4",
-    },
-    {
-      id: 5,
-      title: "test note 5",
-      content: "bla bla note5",
-    },
-    {
-      id: 6,
-      title: "test note 6",
-      content: "bla bla note6",
-    },
-  ]);
+  const [notes, setNotes] = useState<NoteType[]>([]);
   const [selectedNote, setSelectedNote] = useState<NoteType | null>(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   useEffect(() => {
+    console.log("Endpoint URL:", process.env.NEXT_PUBLIC_ENDPOINT_URL);
     const getNotes = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_PORT}/api/notes`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_ENDPOINT_URL}/api/notes`
+        );
         const notes: NoteType[] = await res.json();
         setNotes(notes);
       } catch (error) {
@@ -58,16 +30,20 @@ export default function Home() {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_PORT}/api/notes`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          content,
-        }),
-      });
+      console.log(process.env.REACT_APP_PORT);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_ENDPOINT_URL}/api/notes`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            content,
+          }),
+        }
+      );
 
       const newNote = await res.json();
       setNotes([newNote, ...notes]);
@@ -93,7 +69,7 @@ export default function Home() {
 
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_PORT}/api/notes/${selectedNote.id}`,
+        `${process.env.NEXT_PUBLIC_ENDPOINT_URL}/api/notes/${selectedNote.id}`,
         {
           method: "PUT",
           headers: {
@@ -133,9 +109,12 @@ export default function Home() {
     e.stopPropagation();
 
     try {
-      await fetch(`${process.env.REACT_APP_PORT}/api/notes/${noteId}`, {
-        method: "DELETE",
-      });
+      await fetch(
+        `${process.env.NEXT_PUBLIC_ENDPOINT_URL}/api/notes/${noteId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const updatedNotes = notes.filter((note) => note.id !== noteId);
 
       setNotes(updatedNotes);
