@@ -1,7 +1,8 @@
 "use client";
 import "./Page.css";
-
+import Form from "@/components/Form";
 import React, { useState, useEffect } from "react";
+import Note from "@/components/Note";
 
 export default function Home() {
   const [notes, setNotes] = useState<Note[]>([
@@ -145,54 +146,31 @@ export default function Home() {
 
   return (
     <div className="app-container">
-      <form
-        className="note-form"
-        onSubmit={(e) =>
-          selectedNote ? handleUpdateNote(e) : handleAddNote(e)
-        }
-      >
-        <input
-          placeholder="title"
-          required
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        ></input>
-        <textarea
-          placeholder="Content"
-          rows={10}
-          required
-          value={content}
-          onChange={(event) => setContent(event.target.value)}
-        ></textarea>
-        {selectedNote ? (
-          <div className="edit-buttons">
-            <button type="submit">Save</button>
-            <button onClick={handleCancel}>Cancel</button>
-          </div>
-        ) : (
-          <button type="submit">Add Note</button>
-        )}
-      </form>
+      <Form
+        selectedNote={selectedNote}
+        handleUpdateNote={handleUpdateNote}
+        setContent={setContent}
+        setTitle={setTitle}
+        title={title}
+        content={content}
+        handleAddNote={handleAddNote}
+        handleCancel={handleCancel}
+      />
       <div className="notes-grid">
         {notes.map((note) => (
-          <div
-            className="note-item"
+          <Note
             key={note.id}
-            onClick={() => handleSelectNote(note)}
-          >
-            <div className="notes-header">
-              <button onClick={(e) => handleDeleteNote(e, note.id)}>x</button>
-            </div>
-            <h2>{note.title}</h2>
-            <p>{note.content}</p>
-          </div>
+            handleDeleteNote={handleDeleteNote}
+            handleSelectNote={handleSelectNote}
+            note={note}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-type Note = {
+export type Note = {
   id: number;
   title: string;
   content: string;

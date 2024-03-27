@@ -28,7 +28,7 @@ body {
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
-  background-color: #f9f9f9;
+  background-color: rgb(240, 240, 141);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
@@ -66,15 +66,15 @@ input {
 
 .note-form button {
   border-radius: 5px;
-  background-color: rgb(64, 154, 184);
+  background-color: rgb(240, 240, 141);
   border: none;
   padding: 10px;
   font-size: 16px;
-  color: white;
+  color: black;
 }
 
 .note-form button:hover {
-  background-color: rgb(106, 175, 198);
+  background-color: rgb(246, 246, 65);
   cursor: pointer;
 }
 
