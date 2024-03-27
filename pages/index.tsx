@@ -44,7 +44,7 @@ export default function Home() {
   useEffect(() => {
     const getNotes = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/notes");
+        const res = await fetch(`${process.env.REACT_APP_PORT}/api/notes`);
         const notes: NoteType[] = await res.json();
         setNotes(notes);
       } catch (error) {
@@ -58,7 +58,7 @@ export default function Home() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/api/notes", {
+      const res = await fetch(`${process.env.REACT_APP_PORT}/api/notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export default function Home() {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/api/notes/${selectedNote.id}`,
+        `${process.env.REACT_APP_PORT}/api/notes/${selectedNote.id}`,
         {
           method: "PUT",
           headers: {
@@ -133,7 +133,7 @@ export default function Home() {
     e.stopPropagation();
 
     try {
-      await fetch(`http://localhost:3000/api/notes/${noteId}`, {
+      await fetch(`${process.env.REACT_APP_PORT}/api/notes/${noteId}`, {
         method: "DELETE",
       });
       const updatedNotes = notes.filter((note) => note.id !== noteId);
