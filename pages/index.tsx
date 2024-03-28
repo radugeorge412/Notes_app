@@ -4,27 +4,11 @@ import Form from "@/components/Form";
 import React, { useState, useEffect } from "react";
 import Note from "@/components/Note";
 
-export default function Home() {
-  const [notes, setNotes] = useState<NoteType[]>([]);
+export default function Home({ initialNotes }: { initialNotes: NoteType[] }) {
+  const [notes, setNotes] = useState<NoteType[]>(initialNotes);
   const [selectedNote, setSelectedNote] = useState<NoteType | null>(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
-  useEffect(() => {
-    console.log("Endpoint URL:", process.env.NEXT_PUBLIC_ENDPOINT_URL);
-    const getNotes = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_ENDPOINT_URL}/api/notes`
-        );
-        const notes: NoteType[] = await res.json();
-        setNotes(notes);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getNotes();
-  }, []);
 
   const handleAddNote = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -147,6 +131,19 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  let notes = [];
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_ENDPOINT_URL}/api/notes`
+    );
+    notes = await res.json();
+  } catch (error) {
+    console.error("Failed to fetch notes:", error);
+  }
+  return { props: { initialNotes: notes } };
 }
 
 export type NoteType = {
